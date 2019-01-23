@@ -1,5 +1,6 @@
 //получаем абсолютный путь
-let path = require('path');
+let path = require('path'),
+    ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 //настройка в webpack
 let conf = {
@@ -21,9 +22,21 @@ let conf = {
                 test: /\.js$/,
                 loader: 'babel-loader'
                 // exclude: '/node_modules/'
+            },
+            {
+                //для вывода css в отдельный файл
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract({
+                    // fallback: 'style-loader',
+                    use: 'css-loader'
+                })
             }
         ]
-    }
+    },
+    //для вывода css в отдельный файл
+    plugins: [
+        new ExtractTextPlugin('styles.css'),
+    ]
     // devtool: 'eval-sourcemap'
 
 };
