@@ -1,1 +1,106 @@
-# Работа с Webpack
+# *Работа с Webpack*
+## *Ход работы*
+1. Выполним команду `npm init`. После этого создается файл package.json.
+![image](https://user-images.githubusercontent.com/37180024/51604619-62e27900-1f1e-11e9-9b99-8ff9e5ef18fc.png "package.json")
+2. Устанавливаем модуль Webpack: `npm i webpack --save-dev`
+![image](https://user-images.githubusercontent.com/37180024/51605151-4a269300-1f1f-11e9-9385-e536169c90a4.png "Установка модуля Webpack")
+3. Установим webpack-cli: `npm i webpack-cli --save-dev`
+![image](https://user-images.githubusercontent.com/37180024/51605448-257eeb00-1f20-11e9-8671-c65a9e25a082.png "Установка webpack-cli")
+4. Изменим скрипт на build в файле package.json:
+```json
+"scripts": {
+    "build": "webpack"
+  }
+```
+5. Создадим папку src в нашем проекте и в нем создадим index.js
+6. Создадим файл index.html внутри проекта и файл some.js в папке src.
+7. Подключим ` <script src="dist/main.js"></script>` в index.html. 
+8. Добавим след. код в some.js:
+```javascript
+function sum(...numbers) {
+    return numbers.reduce((previousValue, currentValue) => {
+        return previousValue + currentValue;
+    })
+}
+function avg(...numbers) {
+    return sum(...numbers)/numbers.length;
+}
+
+export default avg;
+```
+9. Импортируем функцию avg в index.js:
+```javascript
+import avg from './some';
+console.log(avg(1,5475,32,5));
+```
+10. Запустим скрипт build: `npm run build`
+![image](https://user-images.githubusercontent.com/37180024/51606787-e9e62000-1f23-11e9-8793-54da30b4d922.png "Запуск build")
+11. После этого откроем index.html
+![image](https://user-images.githubusercontent.com/37180024/51606909-43e6e580-1f24-11e9-99b6-6bbefd40a654.png "Работа с модулями")
+12. Установим jQuery `npm i jquery --save`
+![image](https://user-images.githubusercontent.com/37180024/51607021-94f6d980-1f24-11e9-836e-48ff414e59fe.png "Установка jQuery")
+13. Импортируем jQuery и немного пработаем сним (в index.js), а также изменим файл index.html
+```html
+<!--index.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 class="title"></h1>
+<script src="dist/main.js"></script>
+</body>
+</html>
+```
+```javascript
+//index.js
+import avg from './some';
+import $ from 'jquery';
+$('.title').html('Some text!');
+console.log(avg(1,5475,32,5));
+```
+После чего запустим build и откроем страницу в браузере
+![image](https://user-images.githubusercontent.com/37180024/51607404-97a5fe80-1f25-11e9-86bf-91a83353038e.png "Работа с jQuery")
+14. Внесем изменения в build:
+```json
+"scripts": {
+    "build": "webpack --mode production"
+  }
+```
+15. Устнаовим webpack-dev-server. В нём встроен локальный сервер и livereload: 
+`npm i webpack-dev-server --save-dev`
+16. Добавим новый скрипт для работы с webpack-dev-sever в package.json:
+```
+json
+"scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack-dev-server --mode development --open"
+  }
+```
+17. Запустим скрипт dev: `npm run dev`
+![image](https://user-images.githubusercontent.com/37180024/51611371-29b30480-1f30-11e9-9484-47342cc10371.png "Запуск скрипта dev")
+18. Создаем файл webpack.config.js в папке нашего проекта
+19. Установим модуль path (для получения абсолютного пути): `npm i path --save-dev`
+20. Добавляем следующий код в webpack.config:
+```javascript
+let path = require('path');
+let conf = {
+    //указываем относительный путь к точке входа
+    entry: './src/index.js',
+    //выходные значения
+    output: {
+        //указываем абсолютный путь к выходной папке
+        path: path.resolve(__dirname,'./dist'),
+        filename: 'main.js',
+        //для webpack-dev-server(если мы удалим папку dist и запустим скрипт dev, все будет работать)
+        publicPath: 'dist/'
+    }
+};
+
+module.exports = conf;
+```
+Для проверки можно запустить build или dev:)
+
+![image](https://user-images.githubusercontent.com/37180024/51613139-ed81a300-1f33-11e9-98a1-94c3739273d0.png "webpack-dev-server будет работать даже без папки dist")
