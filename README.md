@@ -72,8 +72,7 @@ console.log(avg(1,5475,32,5));
 15. Устнаовим webpack-dev-server. В нём встроен локальный сервер и livereload: 
 `npm i webpack-dev-server --save-dev`
 16. Добавим новый скрипт для работы с webpack-dev-sever в package.json:
-```
-json
+```json
 "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack-dev-server --mode development --open"
@@ -103,4 +102,57 @@ module.exports = conf;
 ```
 Для проверки можно запустить build или dev:)
 
-![image](https://user-images.githubusercontent.com/37180024/51613139-ed81a300-1f33-11e9-98a1-94c3739273d0.png "webpack-dev-server будет работать даже без папки dist")
+![image](https://user-images.githubusercontent.com/37180024/51613139-ed81a300-1f33-11e9-98a1-94c3739273d0.png "webpack-dev-server будет работать даже без папки dist + работает browserSync")
+
+17. Добавим в webpack.config новую настройку после output, которая будет показывать ошибку на странице (если мы ее допустим):
+```
+javascript
+devServer: {
+    overlay: true
+}
+```
+![image](https://user-images.githubusercontent.com/37180024/51615236-65ea6300-1f38-11e9-8018-fb644af10232.png)
+18. Меняем код в some.js:
+```javascript
+function sum(...numbers) {
+    return numbers.reduce((previousValue, currentValue) => {
+        return previousValue + currentValue;
+    })
+}
+class SomeMath {
+    avg(...numbers) {
+        return sum(...numbers)/numbers.length;
+    }
+    max(...numbers){
+        return Math.max(...numbers);
+    }
+    merge(a,b){
+      return {
+           ...a,
+           ...b
+      }
+    }
+}
+export default new SomeMath;
+```
+и поменяем код в index.js:
+```javascript
+import some from './some';
+import $ from 'jquery';
+$('.title').html('Some text!');
+console.log(some.avg(1,5475,32,5));
+```
+После этого запстим наш localhost:8080 в Chrome и Edge. В Edge возникает ошибка :frowning:
+Будем исправлять:wink:
+
+![image](https://user-images.githubusercontent.com/37180024/51616600-7e0fb180-1f3b-11e9-9b6a-1a2afe0c9dbb.png "Ошибка в консоли у Edge")
+Для решения этой проблемы установим необходимые моодули babel: `npm i babel-core babel-loader babel-preset-env babel-preset-stage-3 --save-dev`
+После этого создаем файл .babelrc в папке нашего проекта и добавляем следующий код:
+```
+{
+  "presets": [
+    "env",
+    "stage-3"
+  ]
+}
+```
