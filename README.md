@@ -104,15 +104,14 @@ module.exports = conf;
 
 ![image](https://user-images.githubusercontent.com/37180024/51613139-ed81a300-1f33-11e9-98a1-94c3739273d0.png "webpack-dev-server будет работать даже без папки dist + работает browserSync")
 
-17. Добавим в webpack.config новую настройку после output, которая будет показывать ошибку на странице (если мы ее допустим):
-```
-javascript
+21. Добавим в webpack.config новую настройку после output, которая будет показывать ошибку на странице (если мы ее допустим):
+```javascript
 devServer: {
     overlay: true
 }
 ```
 ![image](https://user-images.githubusercontent.com/37180024/51615236-65ea6300-1f38-11e9-8018-fb644af10232.png)
-18. Меняем код в some.js:
+22. Меняем код в some.js:
 ```javascript
 function sum(...numbers) {
     return numbers.reduce((previousValue, currentValue) => {
@@ -173,7 +172,7 @@ module: {
 После этого запускаем build.
 Вот и все, ошибка исправлена :wink:
 ![image](https://user-images.githubusercontent.com/37180024/51665341-9976cd00-1fcc-11e9-9dff-e1658e491ee9.png "Исправление в Edge успешно выполнено!")
-19. Добавление source-map:
+23. Добавление source-map:
 Для этого в webpack.config изменим module.exports:
 ```javascript
 module.exports = (env, options)=>{
@@ -185,7 +184,7 @@ module.exports = (env, options)=>{
 ```
 И запустим build
 ![image](https://user-images.githubusercontent.com/37180024/51666887-cbd5f980-1fcf-11e9-9ffd-7cbcd7e534f7.png "source-map создан")
-20. Поработаем с css
+24. Поработаем с css
 Создадим в src папку css и добавим туда style.css
 ![image](https://user-images.githubusercontent.com/37180024/51668488-58ce8200-1fd3-11e9-8418-11d7f0a264da.png)
 Далее установим css-loader : `npm i css-loader --save-dev`
