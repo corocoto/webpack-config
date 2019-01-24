@@ -156,3 +156,59 @@ console.log(some.avg(1,5475,32,5));
   ]
 }
 ```
+Далее добавим в webpack.config добавим директиву module, в котором будет массив rules (описание правил для работы с файлами):
+```javascript
+module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader'
+                // exclude: '/node_modules/'
+            }
+        ]
+    }
+```
+![image](https://user-images.githubusercontent.com/37180024/51664800-510adf80-1fcb-11e9-913b-39fc7b99a3d0.png "Подключение rules")
+Установим babel-loader 7 версии:`npm i babel-loader@7`
+После этого запускаем build.
+Вот и все, ошибка исправлена :wink:
+![image](https://user-images.githubusercontent.com/37180024/51665341-9976cd00-1fcc-11e9-9dff-e1658e491ee9.png "Исправление в Edge успешно выполнено!")
+19. Добавление source-map:
+Для этого в webpack.config изменим module.exports:
+```javascript
+module.exports = (env, options)=>{
+    // console.log(options);
+    let prod = options.mode==='production';
+    conf.devtool = prod ? 'source-map' : 'eval-sourcemap';
+    return conf;
+};
+```
+И запустим build
+![image](https://user-images.githubusercontent.com/37180024/51666887-cbd5f980-1fcf-11e9-9ffd-7cbcd7e534f7.png "source-map создан")
+20. Поработаем с css
+Создадим в src папку css и добавим туда style.css
+![image](https://user-images.githubusercontent.com/37180024/51668488-58ce8200-1fd3-11e9-8418-11d7f0a264da.png)
+Далее установим css-loader : `npm i css-loader --save-dev`
+После этого утсановим extract-text-webpack-plugin: `npm i extract-text-webpack-plugin@next --save-dev`
+И подключим его в webpack.config:
+Для начала подключим его в начале файла
+```javascript
+ExtractTextPlugin = require('extract-text-webpack-plugin');
+```
+Далее после module добавим следующий код:
+```javascript
+plugins: [
+    new ExtractTextPlugin('styles.css'),
+]
+```
+После этого в rules добавим еще одно правило:
+```javascript
+{
+    //для вывода css в отдельный файл
+    test: /\.css$/,
+    use: ExtractTextPlugin.extract({
+    use: 'css-loader'
+    })
+}
+```
+Запускаем build и подключаем styles.css в dist
