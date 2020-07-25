@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CreativeRusBear/work-with-webpack.git"
+    "url": "git+https://github.com/corocoto/work-with-webpack.git"
   },
-  "author": "CreativeRusBear",
+  "author": "Artem Gusev (corocoto) <gusev2014russia@mail.ru>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CreativeRusBear/work-with-webpack/issues"
+    "url": "https://github.com/corocoto/work-with-webpack/issues"
   },
-  "homepage": "https://github.com/CreativeRusBear/work-with-webpack#readme",
+  "homepage": "https://github.com/corocoto/work-with-webpack#readme",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
